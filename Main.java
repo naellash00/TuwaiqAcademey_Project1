@@ -18,7 +18,7 @@ public class Main {
         System.out.println("How Many Rounds You Want To Play? ");
         int numberOfRounds = input.nextInt();
         int numberOf_userWins = 0, numberOf_computerWins = 0;
-        boolean theWinner_isUser, theWinner_isComputer;
+        boolean theWinner_isUser;
         switch (numberOfRounds) {
             case 1:
                 theWinner_isUser = playOneRound(input, userInput, computerInput);
@@ -32,7 +32,7 @@ public class Main {
                 break;
             case 3:
                 for (int i = 1; i <= numberOfRounds; i++) {
-                    System.out.println("This Is Round " + i);
+                    System.out.println("* This Is Round " + i + " * ");
                     theWinner_isUser = playOneRound(input, userInput, computerInput);
 
                     // check who wins first round
@@ -47,32 +47,32 @@ public class Main {
                     //check who two rounds wins
                     if (numberOf_userWins == 2) {
                         System.out.println("Congrats, You Win The Game!");
-                        break;
-                    } else if (numberOf_computerWins == 2) {
-                        // used if-else so the below condition dont become unreachable
-                        System.out.println("Computer Wins The Game");
+                        numberOf_userWins++;
                         break;
                     }
-//                    else {
-//                        System.out.println("There Is A Tie");
-//
-//                    }
-
+                    if (numberOf_computerWins == 2) {
+                        // used if-else so the below condition dont become unreachable
+                        System.out.println("Computer Wins The Game");
+                        numberOf_computerWins++;
+                        break;
+                    }
+                    // check three rounds wins
+                    if (numberOf_userWins > numberOf_computerWins && numberOf_userWins > 2) {
+                        System.out.println("Congrats, You Win The Game!");
+                    }
+                    if (numberOf_computerWins > numberOf_userWins && numberOf_computerWins > 2) {
+                        System.out.println("Computer Wins The Game");
+                    }
+                    //check for a tie
+                    if(numberOf_userWins==numberOf_computerWins){
+                        System.out.println("There Is A Tie");
+                    }
                 }
-                // check three rounds wins
-                // added the != 2 condition so it dosent print the win two times
-                if (numberOf_userWins > numberOf_computerWins && numberOf_userWins != 2) {
-                    System.out.println("Congrats, You Win The Game!");
-                } else if (numberOf_computerWins > numberOf_userWins && numberOf_computerWins != 2) {
-                    System.out.println("Computer Wins The Game");
-                }
-//                else {
-//                    System.out.println("There Is A Tie");
-//                }
                 break;
             default:
                 System.out.println("Incorrect Number, The Rounds Are Either One Or Three.");
         }
+        
     }
 
     public static int returnRowPosition(int position) {
@@ -200,15 +200,12 @@ public class Main {
             numberOfTries_forUserAndComputer++;
 
             if (checkWin(theGameBoard, userInput)) {
-//                System.out.println("Congrats You Win");
                 // will return true if the user wins, false otherwise
                 return true;
-                //break;
             }
             if (numberOfTries_forUserAndComputer >= MAX_MOVES) {
 //                System.out.println("There Is A Tie");
                 return false;
-                // break;
             }
             // computer round
             do {
@@ -224,16 +221,14 @@ public class Main {
             numberOfTries_forUserAndComputer++;
 
             if (checkWin(theGameBoard, computerInput)) {
-//                System.out.println("Computer Wins");
                 return false;
-                // break;
             }
             //print the game board
             printGameBoard(theGameBoard);
         }
-        // this loop to print the board with both user and computer side
-        System.out.println("The Final Game Board");
-        printGameBoard(theGameBoard);
+//        // this loop to print the board with both user and computer side
+//        System.out.println("The Final Game Board");
+//        printGameBoard(theGameBoard);
 
         return false;
     }
